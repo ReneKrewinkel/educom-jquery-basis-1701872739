@@ -5,15 +5,20 @@
     <script src="js/jquery.js"></script>
     <script>
       $(document).ready( function(){
-        $("#btn").click(function() {
-          $(".window").fadeToggle()
+        
+        $(".star").click (function() {
+          $("this").addClass("red")
         })
 
       })
     </script>
   </head>
   <body>
-    <div id="btn" class="button">Click Me!</div>
-    <div class="window">This is the window!</div>
+    <span class="star">*</span>
+    <span class="star">*</span>
+    <span class="star">*</span>
+    <span class="star">*</span>
+    <span class="star">*</span>
+
   </body>
 </html>
