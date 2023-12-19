@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>Dynamic Table</title>
+        <link rel="stylesheet" href="./css/style.css"/>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+        <script src="./js/jquery.js"></script>
+        <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" ></script>
+
+        <script>
+            $(document).ready(function(){
+
+                const dTable =$("#theBeatles").DataTable({
+                    ajax: "https://api.dev-master.ninja/js/beatles",
+                    columns: [
+                        { data: "id"},
+                        { data: "firstname"},
+                        { data: "lastname"},
+                        { data: "dateOfBirth"},
+                        { data: "email"}
+                    ]
+                })
+
+
+                $("#save").click( function() {
+                    const data = {
+                        firstname: $("#firstname").val(),
+                        lastname: $("#lastname").val().toUpperCase(),
+                        email: $("#email").val()
+                    }
+                    console.log(data)
+
+                    $.ajax({
+                        url: "https://api.dev-master.ninja/js/person/save", 
+                        method: "POST",
+                        data: data,
+                        success: function(result) {
+                            $("#firstname").val(result.firstname)
+                            $("#lastname").val(result.lastname)
+                            $("#email").val(result.email)
+                            console.log(result)
+                        }
+                    })
+
+                })
+
+               
+                // Reload the table every 10 seconds
+
+                setInterval(function(){
+                    dTable.ajax.reload()
+                }, 10000)
+
+
+            })
+
+              
+
+        </script>
+    </head>
+    <body>
+        <table id="theBeatles"
+               class="display nowrap dataTable dtr-inline collapsed">
+            <thead>
+                <th>ID</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Date of Birth</th>
+                <th>Email</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        
+        </table>
+        <form id="form">
+            <input type="text" name="id" id="id" value="1234"><br>
+            firstname: <input type="text" id="firstname"><br>
+            lastname: <input type="text" id="lastname"><br>
+            email: <input type="text"  id="email"><br>
+        </form>
+        <button id="save">Save</button>
+    </body>
+</html>
